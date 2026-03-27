@@ -4,12 +4,17 @@ from telethon import TelegramClient
 from datetime import datetime, timedelta, timezone
 import asyncio
 import threading
+import os
+from telethon.sessions import StringSession
 
-from my_config import api_id, api_hash, tnumber
+api_id = os.environ.get('api_id')
+api_hash = os.environ.get('api_hash')
+tnumber = os.environ.get('tnumber')
+session_string = os.environ.get('SESSION_STRING')
 
 app = FastAPI()
 
-client = TelegramClient('anon', api_id, api_hash)
+client = TelegramClient(StringSession(session_string), api_id, api_hash)
 
 # отдельный loop для Telethon
 telethon_loop = asyncio.new_event_loop()
